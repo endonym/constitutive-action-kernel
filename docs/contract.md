@@ -1,6 +1,6 @@
 # Constitutive action kernel: action contract
 
-**Version:** `0.1.0` contains the original admission API and the versioned v1 action gate, available as `constitutive_action::v1`. This document defines kernel checks and the host action lifecycle. Persistence, evidence verification and effect execution belong to the integrating host.
+**Version:** `0.1.0` provides the versioned v1 action gate, available as `constitutive_action::v1`. This document defines kernel checks and the host action lifecycle. Persistence, evidence verification and effect execution belong to the integrating host.
 
 ## Purpose and claim
 
@@ -15,8 +15,6 @@ The system guarantee is: **for a mediated effect, the controlled adapter execute
 The v1 API binds an exact proposed effect, an applicable profile and a supplied evidence snapshot. It returns `Permitted`, `Prevented`, `DecisionRequired` or `Indeterminate`, with reasons; only `Permitted` carries an `ExecutionAuthority`. A host can resolve an outstanding decision or changed condition and re-evaluate before dispatch. The authority checks the exact action and current supplied state, while the receipt validator relates the decision to a reported technical outcome.
 
 The v1 module uses a schema-versioned envelope. It binds the effect-profile identity and version, operation, destination and canonical payload bytes supplied by the host; fingerprints the gate profile, assessed conditions, evidence, acceptance responses, revocation state and snapshot validity; and requires either an explicit-open policy or named required conditions. Snapshot assessment, acceptance and revocation-request collections are sorted before the decision-basis digest is calculated, so their traversal order does not change it. Profile requirement order remains part of the profile fingerprint. The host authenticates the supplied records that these digests identify.
-
-The original crate-root API remains for existing integrations. Its `ActionIntent` binds proposal, actor, represented participant, context, operation, destination and payload; `EvaluationContext` supplies attributed checks and outstanding acceptances. Its in-process authority supports repeated checks. The integrating host authenticates participants, verifies source evidence, makes dispatch a durable one-use claim, governs revocation and reconciles external outcomes on the actual effect path.
 
 `ActionIntent`, `EvaluationSnapshot` and `GateDecision` require an explicit schema version. `LiveAuthorityState` and `ActionReceipt` emit `schema_version: 1`; JSON without that field deserialises as version 0 for inspection only. Version 0 and unsupported future versions cannot authorise dispatch or validate a new v1 receipt. A v1 decision written before the decision-basis field was added can likewise be inspected but cannot validate a new receipt. The module rejects unknown wire fields; unsupported schema versions cannot produce current dispatch authority or valid current receipts.
 
@@ -42,7 +40,7 @@ Preparing or proposing an action is not authority to execute it. The host suppli
 
 A **revocation request** is an attributed proposal concerning a particular delegation or authority; it is distinct from effective revocation. The v1 record holds a requester, target, routing destination and sequence. The host routes it, records delivery and decision status, and establishes the effective version or sequence at which future authority is withdrawn. A deployment may separately define temporary suspension while a request is pending; that suspension is an explicit policy decision.
 
-The host must serialise an effective authority change against dispatch reservation. A revocation effective before reservation prevents that dispatch. Once an exact attempt has been committed to dispatch, an external effect may already be in flight; a later revocation cannot cancel it retroactively. The host’s action record preserves reservation and revocation ordering alongside the receipt and outcome. The root API's `LiveState.revoked` boolean represents an effective state supplied by a caller. V1 distinguishes a supplied pending request from a supplied effective decision; the host establishes the decision process and transactional ordering boundary.
+The host must serialise an effective authority change against dispatch reservation. A revocation effective before reservation prevents that dispatch. Once an exact attempt has been committed to dispatch, an external effect may already be in flight; a later revocation cannot cancel it retroactively. The host’s action record preserves reservation and revocation ordering alongside the receipt and outcome. V1 distinguishes a supplied pending request from a supplied effective decision; the host establishes the decision process and transactional ordering boundary.
 
 ### Dispatch, retry and occurrence
 
@@ -71,7 +69,7 @@ The host fulfils these obligations. Adapter isolation, integration tests and ope
 
 ## Versioning and compatibility policy
 
-The crate is at `0.1.0`. During the `0.x` series, minor releases may change Rust source or serialised compatibility; patch releases preserve it. This compatibility policy is separate from the kernel's four decision meanings and from the evolving activities built on it. `v1` is the primary import path; the former `experimental_v1` path and its hash-domain strings remain as compatibility identifiers. Each persisted or exchanged contract envelope identifies its schema version independently of the crate version. Readers deny authority for unsupported required fields or versions. Golden encoding/fingerprint fixtures and compatibility tests let a host pin, migrate and verify published records.
+The crate is at `0.1.0`. During the `0.x` series, minor releases may change Rust source or serialised compatibility; patch releases preserve it. This compatibility policy is separate from the kernel's four decision meanings and from the evolving activities built on it. `constitutive_action::v1` is the action API. Fingerprint domain strings remain stable to preserve recorded bindings. Each persisted or exchanged contract envelope identifies its schema version independently of the crate version. Readers deny authority for unsupported required fields or versions. Golden encoding/fingerprint fixtures and compatibility tests let a host pin, migrate and verify published records.
 
 Consumers pin the current source revision, and later an immutable tagged release, while mapping their domain records into the common contract. The task-board example and TGC-Demo exercise different effect profiles; further integrations supply their own controlled adapters and authoritative state. Source distribution and package metadata use the [Generative Commons License (GCL–0.x)](../LICENSE).
 

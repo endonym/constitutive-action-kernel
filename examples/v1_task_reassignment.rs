@@ -694,6 +694,23 @@ mod tests {
     }
 
     #[test]
+    fn stale_task_revision_and_missing_delegation_prevent_admission() {
+        let (mut board, mut proposal) = example();
+        proposal.expected_revision = 2;
+        assert_eq!(
+            board.admit(&proposal).decision.kind,
+            DecisionKind::Prevented
+        );
+        proposal.expected_revision = 3;
+        board.host.delegation_active = false;
+        assert_eq!(
+            board.admit(&proposal).decision.kind,
+            DecisionKind::Prevented
+        );
+        assert_eq!(board.host.assignee, "Alice");
+    }
+
+    #[test]
     fn profile_drift_blocks_old_authority_and_invalidates_terms() {
         let (mut board, proposal) = example();
         assert!(board.host.record_acceptance("Bob", &proposal));

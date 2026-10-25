@@ -58,7 +58,7 @@ The JSON includes decisions, action bindings, before/after board states and rece
 
 The demonstration uses attributed identity and evidence assertions with an in-memory replay map, making the decision path visible. A deployed host authenticates those inputs and provides durable reservation, recovery and capability isolation. The [host integration guide](docs/host-integration.md) specifies the operating protocol.
 
-For new integrations, import the [versioned action API](src/v1.rs) as `constitutive_action::v1` and follow the [contract](docs/contract.md) and [host integration guide](docs/host-integration.md). The original crate-root API remains available for existing integrations; the former module import is retained as a compatibility alias.
+Import the [versioned action API](src/v1.rs) as `constitutive_action::v1` and follow the [contract](docs/contract.md) and [host integration guide](docs/host-integration.md).
 
 ## Architecture
 
@@ -68,9 +68,9 @@ The action boundary does not require Proof of Honesty or Rulebooks. A host can u
 
 ## Implemented API
 
-At `0.1.0`, the [v1 API](src/v1.rs) provides a versioned, exact-effect action envelope; explicit-open and required-condition profiles; evidence and acceptance bindings; distinct pending and effective revocation states; and structural checks for decisions and receipts. The original crate-root API remains available for existing integrations. Hosts supply authentication, evidence verification, durable one-use reservation and external-outcome reconciliation.
+At `0.1.0`, the [v1 API](src/v1.rs) provides a versioned, exact-effect action envelope; explicit-open and required-condition profiles; evidence and acceptance bindings; distinct pending and effective revocation states; and structural checks for decisions and receipts. Hosts supply authentication, evidence verification, durable one-use reservation and external-outcome reconciliation.
 
-The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [crate-root](examples/task_reassignment.rs) and [v1](examples/v1_task_reassignment.rs) task-reassignment examples illustrate both APIs with in-memory hosts.
+The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [task-reassignment example](examples/v1_task_reassignment.rs) illustrates the API with an in-memory host.
 
 Rust hosts run the [host conformance probe](docs/host-conformance.md) against their own persistence and adapter path. Alongside the in-memory reference, [integration evidence](docs/integration-evidence.md) covers TGC-Demo's durable local mock-effect host, including process-crash recovery.
 

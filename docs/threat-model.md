@@ -19,6 +19,6 @@ An agent can submit arbitrary proposals and prompt content, repeat an old propos
 
 ## Kernel and host responsibilities
 
-The v0.1 root API binds admission to an exact action using caller-supplied checks and `LiveState`. The v1 module also binds profile, evidence, acceptance and revocation records and checks their structural consistency. The host establishes input authenticity and completeness, reserves one dispatch durably, controls the effect capability and reconciles the outcome. TGC-Demo runs the [host-conformance probe](host-conformance.md) against its durable local host. The Kernel’s reference probe implementation and standalone task-board demonstration use in-memory state.
+The v1 API binds the exact action, profile, evidence, acceptance and revocation records and checks their structural consistency. The host establishes input authenticity and completeness, reserves one dispatch durably, controls the effect capability and reconciles the outcome. TGC-Demo runs the [host-conformance probe](host-conformance.md) against its durable local host. The Kernel’s reference probe implementation and standalone task-board demonstration use in-memory state.
 
 Activity governance supplies substantive judgements about rules and natural-language interpretations. For mediated effects, governing conditions determine whether an action crosses into execution, and the record shows the decision and outcome.

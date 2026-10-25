@@ -9,14 +9,6 @@ use constitutive_action::v1::{
 
 const DIGEST: &str = "0000000000000000000000000000000000000000000000000000000000000000";
 
-#[test]
-fn v1_import_path_preserves_the_original_module() {
-    assert_eq!(
-        std::any::TypeId::of::<ActionIntent>(),
-        std::any::TypeId::of::<constitutive_action::experimental_v1::ActionIntent>()
-    );
-}
-
 fn golden_intent() -> ActionIntent {
     ActionIntent {
         schema_version: SCHEMA_VERSION,
