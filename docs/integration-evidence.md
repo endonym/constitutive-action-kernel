@@ -1,23 +1,23 @@
 # Integration evidence for v1
 
-This document records observed behavior of the v1 action contract in the task-board demonstration and TGC-Demo's durable local mock-effect host. Each observation identifies the effect path and the evidence supporting it.
+This document links implemented behaviour to the examples and tests that exercise it. It covers the task-board example and TGC-Demo's persistent host with a local mock adapter.
 
 ## Task-board example
 
 The [v1 task-reassignment example](../examples/v1_task_reassignment.rs) uses an in-memory board and a host-owned adapter. It exercises exact-effect binding, a response attributed to Bob for particular terms, rejection of an altered recipient, a saved receipt on replay, and effective withdrawal before dispatch. Attributed identity and verification assertions are supplied by the demonstration host; its replay map is in memory.
 
-## TGC-Demo: constituted authority and durable local effects
+## TGC-Demo: authority, storage and recovery
 
 The [Activity Container demonstration](https://thegenerativecommons.org/activity-container.html) uses the kernel for participant commitments, scoped delegation, separately authorised exceptions, interpretation changes and independent recipient decisions. Its host persists the exact intent, evidence, reservation and receipt. A separately persisted mock adapter compares the admitted effect and records it under the original replay identity. Identity and standing use simulated Proof of Honesty; all financial records and approvals are synthetic.
 
 The TGC-Demo repository supplies executable evidence on that path:
 
-- `src/store.rs`: `persistent_host_passes_official_conformance_including_races` runs the host-conformance probe against the durable store and the mock adapter’s effect comparison, including concurrent reservation and revocation ordering.
-- `tests/cli.rs`: `process_crashes_recover_original_attempt_without_double_effects` terminates child processes after reservation and after external mock success, then recovers the original attempt without a second occurrence.
-- `tests/authority_lifecycle.rs`: 32 governance crash/recovery cases cover proposal, activation, amendment and promotion across both authority topologies, retaining consent and replay identity. Additional cases verify that recovery applies the activity’s migration policy.
-- `tests/queue_recovery.rs`: process crashes around the pending-work commit test decision/queue atomicity and resolution recovery.
-- `tests/ownership_authorship.rs`: exclusive activity ownership, recovery after owner termination, and interpretation authorship bound to the publishing credential and Rulebook.
-- `tests/kernel_contract.rs`: execution authority expires with required evidence and acceptance.
+- **Concurrent reservation and revocation:** `src/store.rs` runs `persistent_host_passes_official_conformance_including_races` against the durable store and the mock adapter's effect comparison.
+- **Crash recovery without duplicate effects:** `tests/cli.rs` runs `process_crashes_recover_original_attempt_without_double_effects`, terminating child processes after reservation and after mock execution, then recovering the original attempt.
+- **Consent and replay identity across governance changes:** `tests/authority_lifecycle.rs` covers 32 crash/recovery cases for proposal, activation, amendment and promotion across both authority topologies. Additional cases verify that recovery applies the activity’s migration policy.
+- **Atomic decision and queue updates:** `tests/queue_recovery.rs` crashes processes around the pending-work commit and tests resolution recovery.
+- **Store ownership and interpretation authorship:** `tests/ownership_authorship.rs` checks exclusive activity ownership, recovery after owner termination, and authorship bound to the publishing credential and Rulebook.
+- **Authority expiry:** `tests/kernel_contract.rs` checks that execution authority expires with required evidence and acceptance.
 
 The 23 October 2026 validation recorded 104 passing workspace test results and 48 passing standalone kernel test results, with no failures or ignored tests. These suites overlap and are not additive counts of distinct obligations. All twelve narrative branches and six executable examples passed. To capture current results, test stores, source inputs and SHA-256 fingerprints, run `python3 tools/verify.py --out NEW_DIRECTORY` from TGC-Demo.
 

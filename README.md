@@ -58,17 +58,17 @@ The JSON includes decisions, action bindings, before/after board states and rece
 
 The demonstration uses attributed identity and evidence assertions with an in-memory replay map, making the decision path visible. A deployed host authenticates those inputs and provides durable reservation, recovery and capability isolation. The [host integration guide](docs/host-integration.md) specifies the operating protocol.
 
-Import the [versioned action API](src/v1.rs) as `constitutive_action::v1` and follow the [contract](docs/contract.md) and [host integration guide](docs/host-integration.md).
+Import the API as `constitutive_action::v1`. After running the example, follow the [host integration guide](docs/host-integration.md), then [test your integration](docs/host-conformance.md). Use the [contract](docs/contract.md) and [threat model](docs/threat-model.md) as references.
 
 ## Architecture
 
-The contract is expressed in proposals, authority, attributed evidence, decisions and effects. Hosts define the activity-specific conditions and effect profiles; adapters hold the capabilities that make admitted effects real. This separation lets different environments use the same action boundary while retaining responsibility for their own rules, evidence and execution.
+Your application defines the rules an action must satisfy and the exact operation being proposed. The Kernel evaluates those inputs; your adapter performs the permitted operation. The adapter holds the credentials or access needed to change the resource. Different applications can use the same action boundary while choosing their own rules, evidence sources and resources.
 
 The action boundary does not require Proof of Honesty or Rulebooks. A host can use existing institutional identity, standing and authority records; where standing credentials are required, these may include Proof of Honesty. Standing does not by itself authorise an action. The kernel binds the resulting decision to the exact proposal; the host authenticates and assesses the inputs, controls dispatch, and retains evidence of the outcome. The [contract](docs/contract.md) and [threat model](docs/threat-model.md) define this division of responsibility.
 
 ## Implemented API
 
-At `0.1.0`, the [v1 API](src/v1.rs) provides a versioned, exact-effect action envelope; explicit-open and required-condition profiles; evidence and acceptance bindings; distinct pending and effective revocation states; and structural checks for decisions and receipts. Hosts supply authentication, evidence verification, durable one-use reservation and external-outcome reconciliation.
+At `0.1.0`, the [v1 API](src/v1.rs) records the exact proposed operation, the conditions to check, the evidence used and the required consent. It distinguishes a request to revoke authority from a revocation that has taken effect, and checks that decisions and receipts refer to the same action. A profile must list required conditions or explicitly allow an open policy. Your application authenticates and verifies inputs, durably reserves each execution attempt and checks the outcome against the adapter or external service.
 
 The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [task-reassignment example](examples/v1_task_reassignment.rs) illustrates the API with an in-memory host.
 
@@ -80,7 +80,7 @@ Rust hosts run the [host conformance probe](docs/host-conformance.md) against th
 cargo test --locked --all-targets
 ```
 
-This runs the kernel tests, wire fixtures, host-conformance tests and both examples' tests. `cargo test --locked --all-targets --offline` works once the pinned dependencies are cached. The repository tracks `Cargo.lock` to reproduce its examples and tests; consumers resolve this library through their own lockfiles.
+This runs the kernel tests, wire fixtures, host-conformance tests and the task-reassignment example's tests. `cargo test --locked --all-targets --offline` works once the pinned dependencies are cached. The repository tracks `Cargo.lock` to reproduce its examples and tests; consumers resolve this library through their own lockfiles.
 
 ## Distribution
 
