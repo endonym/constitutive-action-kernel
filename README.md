@@ -64,6 +64,8 @@ Import the API as `constitutive_action::v1`. After running the example, follow t
 
 Your application defines the rules an action must satisfy and the exact operation being proposed. The Kernel evaluates those inputs; your adapter performs the permitted operation. The adapter holds the credentials or access needed to change the resource. Different applications can use the same action boundary while choosing their own rules, evidence sources and resources.
 
+Natural-language agreements express commitments that execution checks may only partly capture. `Permitted` means the proposed action passed the required checks on the supplied evidence. An authorised action can still reflect a misunderstanding or cause harm. The host retains the governing terms, attributed assessments and execution evidence so participants can assess responsibility and revise the activity’s rules.
+
 The action boundary does not require Proof of Honesty or Rulebooks. A host can use existing institutional identity, standing and authority records; where standing credentials are required, these may include Proof of Honesty. Standing does not by itself authorise an action. The kernel binds the resulting decision to the exact proposal; the host authenticates and assesses the inputs, controls dispatch, and retains evidence of the outcome. The [contract](docs/contract.md) and [threat model](docs/threat-model.md) define this division of responsibility.
 
 ## Implemented API

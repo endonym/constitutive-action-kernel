@@ -8,6 +8,8 @@ The Kernel evaluates exact proposed effects against host-supplied conditions, ev
 
 The Kernel binds each decision to the exact proposed action, its governing conditions, and evidence. Its common contract identifies proposals, authority, evidence, decisions and effects. An integrating environment supplies the activity-specific conditions and an adapter for the effect it controls. Substantive judgements about those conditions belong to the activity and its participants.
 
+Natural-language agreements express commitments that execution checks may only partly capture. `Permitted` means the proposed action passed the required checks on the supplied evidence. An authorised action can still reflect a misunderstanding or cause harm. The host retains the governing terms, attributed assessments and execution evidence so participants can assess responsibility and revise the activity’s rules.
+
 The system guarantee is: **for a mediated effect, the controlled adapter executes no broader effect than the one admitted under recorded authority**. The host authenticates inputs, holds the effectful capability, and preserves evidence of the adapter's actual outcome. The kernel's decision and the host's receipt connect that outcome to the exact governed proposal.
 
 ## Versioned action API
