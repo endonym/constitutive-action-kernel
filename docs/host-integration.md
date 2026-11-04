@@ -1,5 +1,7 @@
 # Integrating the v1 action API in a Rust host
 
+Deciding whether to build on the Kernel? Start with [adopting](adopting.md).
+
 Use this guide to add the Kernel to an application that controls a resource. Your application is the host: it verifies evidence, keeps the credentials, reserves an execution attempt and calls its controlled adapter. The [task-reassignment demonstration](../examples/v1_task_reassignment.rs) shows how to build the intent, profile, evidence, acceptance and receipt using in-memory state. A deployment stores its reservations durably.
 
 For a concrete end-to-end case, follow [permission, execution and a lost response](worked-example.md): a task assignment that succeeds at the service, loses its response, and is recovered after authority is withdrawn.

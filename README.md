@@ -62,7 +62,7 @@ Import the API as `constitutive_action::v1`. After running the example, follow t
 
 ## Architecture
 
-Your application defines the rules an action must satisfy and the exact operation being proposed. The Kernel evaluates those inputs; your adapter performs the permitted operation. The adapter holds the credentials or access needed to change the resource. Different applications can use the same action boundary while choosing their own rules, evidence sources and resources.
+Your application defines the rules an action must satisfy and the exact operation being proposed. The Kernel evaluates those inputs; your adapter performs the permitted operation. The adapter holds the credentials or access needed to change the resource. Different applications can use the same action boundary while choosing their own rules, evidence sources and resources. [Deciding whether to build on the Kernel](docs/adopting.md) describes the problems it closes, the work it hands to the host and when it is the wrong tool.
 
 Natural-language agreements express commitments that execution checks may only partly capture. `Permitted` means the proposed action passed the required checks on the supplied evidence. An authorised action can still reflect a misunderstanding or cause harm. The host retains the governing terms, attributed assessments and execution evidence so participants can assess responsibility and revise the activity’s rules.
 
@@ -86,6 +86,6 @@ This runs the kernel tests, wire fixtures, host-conformance tests and the task-r
 
 ## Distribution
 
-The source is available from this checkout. TGC-Demo vendors a fingerprinted source snapshot. The `tgc-demo-kernel-v1` tag identifies the original demo baseline, not a versioned package release. The current evaluated demo includes later reviewed fixes not covered by that tag; the demo's source fingerprints identify its vendored working tree. Publishing the reviewed revision to GitHub remains TODO. See the [demo's evaluation evidence](https://thegenerativecommons.org/evaluate.html). No versioned package release has been published to a registry.
+The source is available from this checkout. TGC-Demo vendors a fingerprinted source snapshot. The `tgc-demo-kernel-v1` tag identifies the original demo baseline, not a versioned package release. The current evaluated demo includes later reviewed fixes not covered by that tag; the demo's source fingerprints identify its vendored working tree. See the [demo's evaluation evidence](https://thegenerativecommons.org/evaluate.html). No versioned package release has been published to a registry.
 
 The source is licensed under the [Generative Commons License (GCL–0.x)](LICENSE). [∀ — Kernel Manifest](MANIFEST.md) describes this repository's control boundary; an operating host needs its own deployment-specific disclosure. `publish = false` disables publication to a Rust package registry; it does not restrict source distribution under the licence.
