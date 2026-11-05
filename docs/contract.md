@@ -4,7 +4,7 @@
 
 ## Purpose and claim
 
-The Kernel evaluates exact proposed effects against host-supplied conditions, evidence and required consent. Activity Field Containers use it with either **controlled** or **constitutive** authority. An agent may propose an action, but the capability that makes a consequential effect real remains with a host-controlled adapter. The host resolves the applicable commitments, authority and evidence; the kernel admits, prevents, requests a decision or returns an indeterminate result for the *exact* proposed effect. An admitted effect can then be dispatched under narrow, current authority and joined to a record of what occurred or failed.
+The Kernel evaluates exact proposed effects against host-supplied conditions, evidence and required consent. The Activity Field Container uses it with either **controlled** or **constitutive** authority. An agent may propose an action, but the capability that makes a consequential effect real remains with a host-controlled adapter. The host resolves the applicable commitments, authority and evidence; the kernel admits, prevents, requests a decision or returns an indeterminate result for the *exact* proposed effect. An admitted effect can then be dispatched under narrow, current authority and joined to a record of what occurred or failed.
 
 The Kernel binds each decision to the exact proposed action, its governing conditions, and evidence. Its common contract identifies proposals, authority, evidence, decisions and effects. An integrating environment supplies the activity-specific conditions and an adapter for the effect it controls. Substantive judgements about those conditions belong to the activity and its participants.
 
@@ -20,7 +20,7 @@ The v1 module uses a schema-versioned envelope. It binds the effect-profile iden
 
 `ActionIntent`, `EvaluationSnapshot` and `GateDecision` require an explicit schema version. `LiveAuthorityState` and `ActionReceipt` emit `schema_version: 1`; JSON without that field deserialises as version 0 for inspection only. Version 0 and unsupported future versions cannot authorise dispatch or validate a new v1 receipt. A v1 decision written before the decision-basis field was added can likewise be inspected but cannot validate a new receipt. The module rejects unknown wire fields; unsupported schema versions cannot produce current dispatch authority or valid current receipts.
 
-The host selects the profile, authenticates identities, verifies the sources behind assertions and supplies a complete snapshot. It durably reserves dispatch, substantiates external occurrences and routes revocation decisions through its own protocol. The [task-reassignment example](../examples/v1_task_reassignment.rs) exercises the API with an in-memory host; [integration evidence](integration-evidence.md) records tests of TGC-Demo’s persistent host and separately persisted local mock adapter.
+The host selects the profile, authenticates identities, verifies the sources behind assertions and supplies a complete snapshot. It durably reserves dispatch, substantiates external occurrences and routes revocation decisions through its own protocol. The [task-reassignment example](../examples/v1_task_reassignment.rs) exercises the API with an in-memory host; [integration evidence](integration-evidence.md) records tests of the Activity Container’s persistent host (TGC-Demo) and separately persisted local mock adapter.
 
 ## Host lifecycle and versioned action records
 

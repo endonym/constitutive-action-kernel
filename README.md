@@ -74,7 +74,7 @@ At `0.1.0`, the [v1 API](src/v1.rs) records the exact proposed operation, the co
 
 The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [task-reassignment example](examples/v1_task_reassignment.rs) illustrates the API with an in-memory host.
 
-Rust hosts run the [host conformance probe](docs/host-conformance.md) against their own persistence and adapter path. Alongside the in-memory reference, [integration evidence](docs/integration-evidence.md) covers TGC-Demo's durable local mock-effect host, including process-crash recovery.
+Rust hosts run the [host conformance probe](docs/host-conformance.md) against their own persistence and adapter path. Alongside the in-memory reference, [integration evidence](docs/integration-evidence.md) covers the durable local mock-effect host of the Activity Field Container (TGC-Demo), including process-crash recovery.
 
 ## Verify the local checkout
 
@@ -86,6 +86,6 @@ This runs the kernel tests, wire fixtures, host-conformance tests and the task-r
 
 ## Distribution
 
-The source is available from this checkout. TGC-Demo vendors a fingerprinted source snapshot. The `tgc-demo-kernel-v1` tag identifies the original demo baseline, not a versioned package release. The current evaluated demo includes later reviewed fixes not covered by that tag; the demo's source fingerprints identify its vendored working tree. See the [demo's evaluation evidence](https://thegenerativecommons.org/evaluate.html). No versioned package release has been published to a registry.
+The source is available from this checkout. TGC-Demo vendors a fingerprinted source snapshot. The `tgc-demo-kernel-v1` tag identifies the original demo baseline, not a versioned package release. The current evaluated demo includes later reviewed fixes not covered by that tag; the demo's source fingerprints identify its vendored working tree. See the [demo's evaluation evidence](https://thegenerativecommons.org/settlement/evaluate.html). No versioned package release has been published to a registry.
 
 The source is licensed under the [Generative Commons License (GCL–0.x)](LICENSE). [∀ — Kernel Manifest](MANIFEST.md) describes this repository's control boundary; an operating host needs its own deployment-specific disclosure. `publish = false` disables publication to a Rust package registry; it does not restrict source distribution under the licence.

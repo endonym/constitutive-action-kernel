@@ -77,4 +77,4 @@ This checks persistence across fresh handles; the process-crash checks below exe
 
 Separately inject process crashes at reservation commit, after external success before receipt persistence, and during reconciliation. Verify the external service's idempotency/query behaviour, test capability isolation, and check that a live adapter execution produces the reported result. These checks complement the in-memory reference test and receipt-structure validation.
 
-TGC-Demo runs the probe against its durable host and local mock adapter. Its host tests run separately from the Kernel’s CI; see [integration evidence](integration-evidence.md).
+The Activity Field Container's source (TGC-Demo) runs the probe against its durable host and local mock adapter. Its host tests run separately from the Kernel’s CI; see [integration evidence](integration-evidence.md).

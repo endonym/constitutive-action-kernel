@@ -19,6 +19,6 @@ An agent can submit arbitrary proposals and prompt content, repeat an old propos
 
 ## Kernel and host responsibilities
 
-The v1 API binds the exact action, profile, evidence, acceptance and revocation records and checks their structural consistency. The host authenticates inputs, supplies all required records, durably reserves an execution attempt, controls access to the resource and checks the outcome. TGC-Demo runs the [host-conformance probe](host-conformance.md) against its durable local host. The Kernel’s reference probe implementation and standalone task-board demonstration use in-memory state.
+The v1 API binds the exact action, profile, evidence, acceptance and revocation records and checks their structural consistency. The host authenticates inputs, supplies all required records, durably reserves an execution attempt, controls access to the resource and checks the outcome. The Activity Field Container (TGC-Demo) runs the [host-conformance probe](host-conformance.md) against its durable local host. The Kernel’s reference probe implementation and standalone task-board demonstration use in-memory state.
 
 The activity's rules and participants determine how to interpret natural-language terms. The host supplies those assessments to the Kernel as condition results. The execution record preserves the decision and outcome.

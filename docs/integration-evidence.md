@@ -1,6 +1,6 @@
 # Integration evidence for v1
 
-This document links implemented behaviour to the examples and tests that exercise it. It covers the task-board example and TGC-Demo's persistent host with a local mock adapter.
+This document links implemented behaviour to the examples and tests that exercise it. It covers the task-board example and the Activity Field Container's persistent host (TGC-Demo) with a local mock adapter.
 
 ## Task-board example
 
@@ -8,7 +8,7 @@ The [v1 task-reassignment example](../examples/v1_task_reassignment.rs) uses an 
 
 ## TGC-Demo: authority, storage and recovery
 
-The [Activity Container demonstration](https://thegenerativecommons.org/activity-container.html) uses the kernel for participant commitments, scoped delegation, separately authorised exceptions, interpretation changes and independent recipient decisions. Its host persists the exact intent, evidence, reservation and receipt. A separately persisted mock adapter compares the admitted effect and records it under the original replay identity. Identity and standing use simulated Proof of Honesty; all financial records and approvals are synthetic.
+The [Activity Container demonstration](https://thegenerativecommons.org/settlement/activity-container.html) uses the kernel for participant commitments, scoped delegation, separately authorised exceptions, interpretation changes and independent recipient decisions. Its host persists the exact intent, evidence, reservation and receipt. A separately persisted mock adapter compares the admitted effect and records it under the original replay identity. Identity and standing use simulated Proof of Honesty; all financial records and approvals are synthetic.
 
 The TGC-Demo repository supplies executable evidence on that path:
 
