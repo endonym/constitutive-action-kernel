@@ -54,6 +54,34 @@ cargo run --locked --example v1_task_reassignment -- --demo-json
 
 The JSON includes decisions, action bindings, before/after board states and receipts. It is produced by the same Rust example, so a walkthrough can display the actual calls and results.
 
+### Two sources of authority
+
+The first example locates an assignment's authority in the assignee's commitment. A second example contrasts that with a board whose rules are fused with its manager's control:
+
+```sh
+cargo run --locked --example v1_authority_sources
+```
+
+Bob holds task-7 at revision 4, due 2026-12-01. Charlie manages the board and signs every proposal. Two separate runs start from that state and differ only in the host's gate profile. Under manager control, the profile requires Charlie's signature and a current task. Under commitment, it also requires acceptance from the person the change binds, for the exact terms they would bear: who holds the task and its deadline. The kernel API calls that commitment an acceptance.
+
+```text
+1. Manager control: Charlie moves task-7 to Carol: Permitted
+2. Manager control: Charlie brings the deadline forward: Permitted
+3. Commitment: the same signed move is held: DecisionRequired
+4. Commitment: Carol accepts the exact terms: Permitted
+5. Commitment: Charlie's deadline change is held: DecisionRequired
+6. Commitment: Carol refuses the variation: Prevented
+7. Commitment: Carol accepts a different variation: Permitted
+```
+
+| Change | Manager control | Commitment |
+| --- | --- | --- |
+| Charlie moves task-7 from Bob to Carol | Takes effect on his signature alone; Carol is assigned at revision 5 without being asked. | Held until Carol accepts the task's exact terms, then applied at revision 5. |
+| Charlie brings the deadline forward to 2026-11-24 | Takes effect on his signature alone at revision 6. The host does not record a response from Carol, because the profile has no place for one. | Held: Carol's acceptance covered terms due 2026-12-01. Her refusal makes the change `Prevented`, and the accepted terms stand. |
+| Charlie proposes 2026-11-28 instead | — | Carol accepts this variation; the adapter applies it at revision 6. |
+
+Both runs use the same kernel, signer and adapter. `--demo-json` prints the same steps as a transcript.
+
 ### Demonstration setup
 
 The demonstration uses attributed identity and evidence assertions with an in-memory replay map, making the decision path visible. A deployed host authenticates those inputs and provides durable reservation, recovery and capability isolation. The [host integration guide](docs/host-integration.md) specifies the operating protocol.
@@ -72,7 +100,7 @@ The action boundary does not require Proof of Honesty or Rulebooks. A host can u
 
 At `0.1.0`, the [v1 API](src/v1.rs) records the exact proposed operation, the conditions to check, the evidence used and the required consent. It distinguishes a request to revoke authority from a revocation that has taken effect, and checks that decisions and receipts refer to the same action. A profile must list required conditions or explicitly allow an open policy. Your application authenticates and verifies inputs, durably reserves each execution attempt and checks the outcome against the adapter or external service.
 
-The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [task-reassignment example](examples/v1_task_reassignment.rs) illustrates the API with an in-memory host.
+The [host integration guide](docs/host-integration.md) maps the API to persistence, adapter and recovery responsibilities. The [task-reassignment example](examples/v1_task_reassignment.rs) illustrates the API with an in-memory host; the [authority-sources example](examples/v1_authority_sources.rs) runs the same task under manager control and under commitment.
 
 Rust hosts run the [host conformance probe](docs/host-conformance.md) against their own persistence and adapter path. Alongside the in-memory reference, [integration evidence](docs/integration-evidence.md) covers the durable local mock-effect host of the Activity Field Container (TGC-Demo), including process-crash recovery.
 
@@ -82,7 +110,7 @@ Rust hosts run the [host conformance probe](docs/host-conformance.md) against th
 cargo test --locked --all-targets
 ```
 
-This runs the kernel tests, wire fixtures, host-conformance tests and the task-reassignment example's tests. `cargo test --locked --all-targets --offline` works once the pinned dependencies are cached. The repository tracks `Cargo.lock` to reproduce its examples and tests; consumers resolve this library through their own lockfiles.
+This runs the kernel tests, wire fixtures, host-conformance tests and both examples' tests. `cargo test --locked --all-targets --offline` works once the pinned dependencies are cached. The repository tracks `Cargo.lock` to reproduce its examples and tests; consumers resolve this library through their own lockfiles.
 
 ## Distribution
 
