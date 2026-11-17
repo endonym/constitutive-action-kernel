@@ -599,7 +599,7 @@ fn demonstration() -> DemoTranscript {
         &mut committed, &variation, Some(("Carol", true)), Permitted,
         "commitment-variation-accepted",
         "Commitment: Carol accepts a different variation",
-        "Charlie signs a new proposal moving the deadline to 2026-11-28, and Carol accepts those exact terms. The gate is Permitted and the adapter records the new deadline at revision 6. The terms changed because Carol committed to the variation.",
+        "Charlie signs a new proposal moving the deadline to 2026-11-28, and Carol accepts those exact terms. The gate is Permitted and the adapter records the new deadline at revision 6. New terms apply because Carol committed to the variation.",
     );
     assert_eq!(committed.host.deadline, "2026-11-28");
 
